@@ -4,19 +4,25 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
+import com.v2soft.androidconsole.ui.windows.ConsoleWindow;
+
 public class Main {
 
 	private static final Object COMMAND_EXIT = "exit";
 
 	/**
 	 * @param args
+	 * @throws IOException 
 	 */
-	public static void main(String[] args) {
-		String adbPath = "/home/mrco/work/android-sdk/platform-tools/adb";
+	public static void main(String[] args) throws IOException {
+	    String androidHome = System.getenv("ANDROID_HOME");
+	    if ( androidHome == null ) throw new NullPointerException("ANDROID_HOME envar is null");
+		String adbPath = System.getenv("ANDROID_HOME")+"/platform-tools/adb";
 		String action = "com.v2soft.SecureJabber.ACTION_DIRECT_COMMAND";
-		final InputStreamReader converter = new InputStreamReader(System.in);
+		new ConsoleWindow(adbPath, action);
+		/*final InputStreamReader converter = new InputStreamReader(System.in);
 		final BufferedReader in = new BufferedReader(converter);
-		final AdbCommandSender commandSender = new AdbCommandSender(adbPath, action);
+		
 		String command = null;
 		while ( !COMMAND_EXIT.equals(command)) {
 			System.out.print(">");
@@ -28,7 +34,7 @@ public class Main {
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
-		};
+		};*/
 	}
 
 }
