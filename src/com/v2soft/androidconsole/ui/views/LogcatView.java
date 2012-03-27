@@ -1,5 +1,6 @@
 package com.v2soft.androidconsole.ui.views;
 
+import java.awt.Color;
 import java.awt.Dimension;
 import java.io.BufferedReader;
 import java.io.Closeable;
@@ -37,7 +38,10 @@ implements Closeable {
         listScroller.setAlignmentX(LEFT_ALIGNMENT);        
         setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
         this.add(listScroller);
-        this.setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
+        this.setBorder(BorderFactory.createEmptyBorder(2,2,2,2));
+        mLogPane.setBackground(Color.BLACK);
+        mLogPane.setForeground(Color.WHITE);
+        mLogPane.setBorder(BorderFactory.createEmptyBorder(2,2,2,2));
     }
 
     private void connectToDevice(Object object) {
@@ -63,20 +67,11 @@ implements Closeable {
                 }
                 try {
                     String line="";
-                    StringBuilder result = new StringBuilder();
-                    int buffercount = 0;
                     while((line=mStdIn.readLine()) != null) {
-                        result.append(line);
-                        result.append("\n");
-                        buffercount++;
-                        if ( buffercount > MIN_STRING_COUNT ) {
-                            mLogPane.append(result.toString());
-                            result = new StringBuilder();
-                            buffercount = 0;
-                            mLogPane.setCaretPosition(mLogPane.getDocument().getLength()); 
-                        }
+                        mLogPane.append(line);
+                        mLogPane.append("\n");
+                        mLogPane.setCaretPosition(mLogPane.getDocument().getLength()); 
                     }
-                    mLogPane.append(result.toString());
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
