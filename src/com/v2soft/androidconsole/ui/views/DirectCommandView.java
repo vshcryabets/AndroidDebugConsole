@@ -26,7 +26,8 @@ import java.util.List;
 import javax.swing.BorderFactory;
 import javax.swing.JTextField;
 
-import com.v2soft.androidconsole.AdbCommandSender;
+import com.v2soft.androidconsole.adb.AdbCommandSender;
+import com.v2soft.androidconsole.adb.AdbManager;
 /**
  * 
  * @author V.Shcryabets (vshcryabets@gmail.com)
@@ -37,12 +38,14 @@ public class DirectCommandView
     private static final long serialVersionUID = 1L;
     private AdbCommandSender mCommandSender;
     private List<String> mHistory;
+    private AdbManager mManager;
     private int mHistoryPosition;
     
-    public DirectCommandView(String adbPath, String action) {
+    public DirectCommandView(AdbManager manager) {
         super();
+        if ( manager == null ) throw new NullPointerException();
+        mManager = manager;
         mHistory = new ArrayList<String>();
-        mCommandSender = new AdbCommandSender(adbPath, action, null);
         addActionListener(mListener);
         addKeyListener(mKeyListener);
         this.setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
@@ -72,6 +75,7 @@ public class DirectCommandView
         public void actionPerformed(ActionEvent e) {
             String command = e.getActionCommand();
             try {
+                
                 mCommandSender.send(command);
                 mHistory.add(command);
                 mHistoryPosition = mHistory.size();

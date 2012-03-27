@@ -31,10 +31,10 @@ public class Main {
 	 * @throws IOException 
 	 */
 	public static void main(String[] args) throws IOException {
-	    if ( args.length == 0 ) {
-            showUsage();
-            return;
-        }
+//	    if ( args.length == 0 ) {
+//            showUsage();
+//            return;
+//        }
         int pos = 0;
         String action = null;
         while ( pos < args.length ) {
@@ -45,14 +45,14 @@ public class Main {
             }
             pos++;
         }
-        if ( action == null ) {
-            showUsage();
-            return;
-        }
+//        if ( action == null ) {
+//            showUsage();
+//            return;
+//        }
 	    String androidHome = System.getenv("ANDROID_HOME");
 	    if ( androidHome == null ) throw new NullPointerException("ANDROID_HOME envar is null");
 		String adbPath = System.getenv("ANDROID_HOME")+"/platform-tools/adb";
-		new ConsoleWindow(adbPath, action);
+		new ConsoleWindow(adbPath);
 	}
 	
     private static void showUsage() {
