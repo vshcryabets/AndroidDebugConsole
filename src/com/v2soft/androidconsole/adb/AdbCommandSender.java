@@ -26,18 +26,18 @@ import java.io.InputStreamReader;
 public class AdbCommandSender {
 	private String mAdbPath;
 	private String mAction;
-	private String mDeviceSerial;
+	private AndroidDevice mDevice;
 	
 	/**
 	 * Construct new device command sender
 	 * @param adbPath
 	 * @param device
 	 */
-	public AdbCommandSender(String adbPath, String device) {
+	protected AdbCommandSender(String adbPath, AndroidDevice device) {
 		if ( adbPath == null ) throw new NullPointerException();
 		if ( device == null ) throw new NullPointerException();
 		mAdbPath = adbPath;
-		mDeviceSerial = device;
+		setDevice(device);
 	}
 	
 	/**
@@ -70,5 +70,13 @@ public class AdbCommandSender {
             result.append("\n");
         }
         return result.toString();
+	}
+
+	public AndroidDevice getDevice() {
+		return mDevice;
+	}
+
+	protected void setDevice(AndroidDevice mDevice) {
+		this.mDevice = mDevice;
 	}
 }
